@@ -3,7 +3,7 @@ ndgrid.jl
 lazy and non-lazy versions of ndgrid
 =#
 
-#using LazyArrays: Applied, ApplyArray
+using LazyArrays: Applied, ApplyArray
 
 export ndgrid, ndgrid_lazy
 
