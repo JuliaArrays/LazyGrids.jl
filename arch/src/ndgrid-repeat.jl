@@ -5,7 +5,7 @@ lazy and non-lazy versions of ndgrid
 
 using LazyArrays: Applied, ApplyArray
 
-export ndgrid, ndgrid_lazy
+export ndgrid_array, ndgrid_lazy
 
 """
     grid = ndgrid_repeat(v::AbstractVector, dims::Dims{D}, d::Int)
@@ -24,14 +24,14 @@ end
 
 
 """
-    ndgrid(args::AbstractVector...)
+    ndgrid_array(args::AbstractVector...)
 Returns tuple of `length(args)` arrays, each of size `tuple(length.(args)...)`.
 This method is provided for convenience and testing,
 but `ndgrid` is less efficient than broadcast so should be avoided.
 The tuple returned here requires `prod(length.(args)) * length(args)` memory;
 using `ndgrid_lazy` is an alternative that uses `O(length(args))` memory.
 """
-function ndgrid(args::AbstractVector...)
+function ndgrid_array(args::AbstractVector...)
     fun = i -> ndgrid_repeat(args[i], length.(args), i)
     ntuple(fun, Val(length(args)))
 end
