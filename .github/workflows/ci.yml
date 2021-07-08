@@ -1,7 +1,14 @@
 name: CI
 on:
-  - push
-  - pull_request
+  push:
+    paths-ignore:
+      - '*/*.md'
+      - 'docs/**'
+  pull_request:
+    paths-ignore:
+      - '*/*.md'
+      - 'docs/**'
+
 jobs:
   test:
     name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
@@ -10,7 +17,6 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '1.5'
           - '1'
         os:
           - ubuntu-latest
