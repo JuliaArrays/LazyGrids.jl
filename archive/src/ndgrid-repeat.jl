@@ -32,8 +32,10 @@ The tuple returned here requires `prod(length.(args)) * length(args)` memory;
 using `ndgrid_lazy` is an alternative that uses `O(length(args))` memory.
 """
 function ndgrid_array(args::AbstractVector...)
+    D = length(args)
+    T = Tuple{ntuple(i -> Array{eltype(args[i]), D}, D)...} # return type
     fun = i -> ndgrid_repeat(args[i], length.(args), i)
-    ntuple(fun, Val(length(args)))
+    ntuple(fun, D)::T
 end
 
 
