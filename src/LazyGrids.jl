@@ -18,5 +18,6 @@ include("ndgrid-unitr.jl")
 include("ndgrid-range.jl")
 include("ndgrid-avect.jl")
 include("array.jl")
+include("timer.jl")
 
 end # module
