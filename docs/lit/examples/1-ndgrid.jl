@@ -85,9 +85,12 @@ y = copy(x)
 # The documentation below has many timing comparisons.
 # The times in the Julia comments are on a 2017 iMac with Julia 1.6.1;
 # the times printed out are whatever server GitHub actions uses.
-# Let's find out:
+# Using a trick to [capture output](https://fredrikekre.github.io/Literate.jl/v2/generated/example/#Output-Capturing),
+# let's find out:
 
-versioninfo()
+io = IOBuffer()
+versioninfo(io)
+String(take!(io))
 
 
 # A basic double loop is the C/Fortran way.

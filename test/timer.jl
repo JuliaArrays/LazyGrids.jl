@@ -7,6 +7,7 @@ using Test: @test, @testset, @test_throws, @inferred
 @testset "timer" begin
 	t = @benchmark sum(1:7)
 	@inferred btime(t)
+	@test btime(t) isa String
 
-	@timeo sum(1:7)
+	@test (@timeo sum(1:7)) isa String
 end
