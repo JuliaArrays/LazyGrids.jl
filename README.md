@@ -15,16 +15,45 @@ https://github.com/JuliaArrays/LazyGrids.jl
 
 This package exports the following methods:
 * `ndgrid` : a "lazy" version of `ndgrid` that returns a tuple of
-  `AbstractArray`s essentially instantly with almost no memory allocated.
-* `ndgrid_array` : return a traditional tuple of `Array`s,
+  `AbstractArray` objects essentially instantly with almost no memory allocated.
+* `ndgrid_array` : return a traditional tuple of `Array` objects,
   which takes much longer to create and uses a lot of memory.
-  It is not recommended but included for comparison.
+  It is not recommended but is included for comparison.
 
 See the documentation linked in the blue badges above for examples,
 and for a 1-line lazy version of `meshgrid`.
 
-As shown in the examples, the lazy version typically is as fast
-if not faster than using a regular dense `Array`.
+As shown in the examples, the lazy version typically is as fast,
+if not faster, than using conventional dense `Array` objects.
+
+## Example
+```julia
+julia> using LazyGrids
+(xg, yg) = ndgrid(1:2, 3:0.5:4)
+([1 1 1; 2 2 2], [3.0 3.5 4.0; 3.0 3.5 4.0])
+
+julia> xg
+2×3 LazyGrids.GridUR{Int64, 1, 2}:
+ 1  1  1
+ 2  2  2
+
+julia> yg
+2×3 LazyGrids.GridAR{Float64, 2, 2}:
+ 3.0  3.5  4.0
+ 3.0  3.5  4.0
+
+julia> x = LinRange(-1,1,1001)
+1001-element LinRange{Float64}: ...
+
+julia> (xg, yg, zg) = ndgrid(x, x, x)
+{... lots of output ...}
+
+julia> size(xg) # show array dimensions
+(1001, 1001, 1001)
+
+julia> sizeof(xg) # show number of bytes used
+40
+```
 
 ## Related packages
 

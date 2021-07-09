@@ -90,7 +90,7 @@ y = copy(x)
 
 io = IOBuffer()
 versioninfo(io)
-String(take!(io))
+split(String(take!(io)), '\n')
 
 
 # A basic double loop is the C/Fortran way.
