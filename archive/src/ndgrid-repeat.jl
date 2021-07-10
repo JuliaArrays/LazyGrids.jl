@@ -5,7 +5,7 @@ lazy and non-lazy versions of ndgrid
 
 using LazyArrays: Applied, ApplyArray
 
-export ndgrid_array, ndgrid_lazy
+export ndgrid_array_r, ndgrid_lazy
 
 """
     grid = ndgrid_repeat(v::AbstractVector, dims::Dims{D}, d::Int)
@@ -24,14 +24,14 @@ end
 
 
 """
-    ndgrid_array(args::AbstractVector...)
+    ndgrid_array_r(args::AbstractVector...)
 Returns tuple of `length(args)` arrays, each of size `tuple(length.(args)...)`.
 This method is provided for convenience and testing,
 but `ndgrid` is less efficient than broadcast so should be avoided.
 The tuple returned here requires `prod(length.(args)) * length(args)` memory;
 using `ndgrid_lazy` is an alternative that uses `O(length(args))` memory.
 """
-function ndgrid_array(args::AbstractVector...)
+function ndgrid_array_r(args::AbstractVector...)
     D = length(args)
     T = Tuple{ntuple(i -> Array{eltype(args[i]), D}, D)...} # return type
     fun = i -> ndgrid_repeat(args[i], length.(args), i)
@@ -41,17 +41,18 @@ end
 
 # lazy array method for a single element of the ndgrid tuple:
 
-const Repeat = Applied{A, typeof(ndgrid_repeat), Tuple{V,Dim,Int}} where
+const _Repeat = Applied{A, typeof(ndgrid_repeat), Tuple{V,Dim,Int}} where
     {A <: Any, V <: AbstractVector, Dim <: Dims{D} where D}
-Base.ndims(r::Repeat) = length(r.args[2])
-Base.size(r::Repeat) = r.args[2]
-Base.eltype(r::Repeat) = eltype(r.args[1])
+Base.ndims(r::_Repeat) = length(r.args[2])
+Base.size(r::_Repeat) = r.args[2]
+Base.eltype(r::_Repeat) = eltype(r.args[1])
 
-const RepeatA{T,N} = ApplyArray{T, N, typeof(ndgrid_repeat)}
-# Base.IndexStyle(RepeatA) = IndexCartesian() # default
+const Repeat{T,N} = ApplyArray{T, N, typeof(ndgrid_repeat)}
+# Base.IndexStyle(Repeat) = IndexCartesian() # default
 
+#@inline # todo
 Base.@propagate_inbounds function Base.getindex(
-    r::RepeatA{T,N},
+    r::Repeat{T,N},
     i::Vararg{Int,N},
 ) where {T,N}
     @boundscheck checkbounds(r, i...)
