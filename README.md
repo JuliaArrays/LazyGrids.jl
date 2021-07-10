@@ -15,10 +15,11 @@ https://github.com/JuliaArrays/LazyGrids.jl
 
 This package exports the following methods:
 * `ndgrid` : a "lazy" version of `ndgrid` that returns a tuple of
-  `AbstractArray` objects essentially instantly with almost no memory allocated.
+  [`AbstractArray`](https://docs.julialang.org/en/v1/manual/interfaces/#man-interface-array)
+   objects essentially instantly with just a few bytes of memory allocated.
 * `ndgrid_array` : return a traditional tuple of `Array` objects,
-  which takes much longer to create and uses a lot of memory.
-  It is not recommended but is included for comparison.
+  which takes much longer to create and can use a *lot* of memory.
+  It is not recommended, but is included for comparison purposes.
 
 See the documentation linked in the blue badges above for examples,
 and for a 1-line lazy version of `meshgrid`.
