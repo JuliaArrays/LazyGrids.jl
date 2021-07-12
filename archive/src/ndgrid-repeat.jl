@@ -50,8 +50,7 @@ Base.eltype(r::_Repeat) = eltype(r.args[1])
 const Repeat{T,N} = ApplyArray{T, N, typeof(ndgrid_repeat)}
 # Base.IndexStyle(Repeat) = IndexCartesian() # default
 
-#@inline # todo
-Base.@propagate_inbounds function Base.getindex(
+@inline Base.@propagate_inbounds function Base.getindex(
     r::Repeat{T,N},
     i::Vararg{Int,N},
 ) where {T,N}

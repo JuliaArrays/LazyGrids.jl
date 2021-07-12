@@ -78,22 +78,3 @@ tl = @benchmark copyto!(out, xl) # 179.9ms with lots of memory
 @which getindex(xn, 3) # calls Base
 @which getindex(xl, 1, 1, 1) # calls specialized getindex
 =#
-
-#=
-# uncomment this block for timing comparisons (todo: move to literate)
-
-    x = 1:2^8
-    y = 1:2^9
-    z = 1:2^4
-    (xn, _, _) = ndgrid(x, y, z)
-    (xl, _, _) = ndgrid_lazy(x, y, z)
-    f = x -> sum(a -> a^2, x)
-    g = x -> @inbounds sum(a -> a^2, x)
-    @assert f(xl) ≈ f(xn) ≈ g(xl)
-
-using BenchmarkTools
-@btime f($xn) # 0.9 ms
-@btime f($xl) # 4.3 ms (much slower, but less memory...)
-@btime g($xn) # 0.9 ms
-@btime g($xl) # 4.3 ms (so inbounds did not help)
-=#
