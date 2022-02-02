@@ -1,6 +1,8 @@
 name: CI
 on:
   push:
+    branches:
+      - main
     paths-ignore:
       - '*/*.md'
       - 'docs/**'
@@ -17,7 +19,9 @@ jobs:
       fail-fast: false
       matrix:
         version:
+          - '1.6'
           - '1'
+          - 'nightly'
         os:
           - ubuntu-latest
           - macOS-latest

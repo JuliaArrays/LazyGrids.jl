@@ -38,12 +38,14 @@ end
 
 
 """
-    btime()
+    btime(t ; unit::Symbol, digits::Int)
 Pretty-print the @benchmark output for non-interactive use with Literate.
 Returns a string so that Literate will capture the output.
+* `unit` is `:ms` by default, for reporting in ms.  Or use `μs`.
+* `digits` is 1 by default.
 """
-btime(t) = string(
-    "time=", round(median(t.times)/10^6, digits=1), # median time in ms
-    "ms mem=", t.memory,
-    " alloc=", t.allocs,
-)
+function btime(t ; unit::Symbol = :ms, digits::Int = 1)
+    scale = unit == :ms ? 10^6 : unit == :μs ? 10^3 : throw("unit $unit")
+    time = round(median(t.times)/scale; digits) # median time in units
+    string("time=", time, unit, " mem=", t.memory, " alloc=", t.allocs)
+end
