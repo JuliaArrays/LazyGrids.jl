@@ -43,8 +43,9 @@ julia> ndgrid(2,3)
 ([1 1 1; 2 2 2], [1 2 3; 1 2 3])
 ```
 """
-function ndgrid(ns::Vararg{Int})
-    all(>(0), ns) || throw(ArgumentError("$n ≤ 0"))
+function ndgrid(n1::Int, ns::Vararg{Int})
+    ns = (n1, ns...)
+    all(>(0), ns) || throw(ArgumentError("$ns ≤ 0"))
     return ndgrid(Base.OneTo.(ns)...)
 end
 
