@@ -1,14 +1,15 @@
 # LazyGrids.jl
-A Julia package for representing multi-dimensional grids
+A Julia package for representing multi-dimensional grids.
 
 https://github.com/JuliaArrays/LazyGrids.jl
 
+[![docs-stable][docs-stable-img]][docs-stable-url]
+[![docs-dev][docs-dev-img]][docs-dev-url]
 [![action status][action-img]][action-url]
 [![pkgeval status][pkgeval-img]][pkgeval-url]
 [![codecov][codecov-img]][codecov-url]
 [![license][license-img]][license-url]
-[![docs-stable][docs-stable-img]][docs-stable-url]
-[![docs-dev][docs-dev-img]][docs-dev-url]
+[![Aqua QA][aqua-img]][aqua-url]
 [![code-style][code-blue-img]][code-blue-url]
 
 ## Methods
@@ -81,3 +82,5 @@ julia> sizeof(xg) # show number of bytes used
 [docs-dev-url]: https://JuliaArrays.github.io/LazyGrids.jl/dev
 [license-img]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
 [license-url]: LICENSE
+[aqua-img]: https://img.shields.io/badge/Aqua.jl-%F0%9F%8C%A2-aqua.svg
+[aqua-url]: https://github.com/JuliaTesting/Aqua.jl
