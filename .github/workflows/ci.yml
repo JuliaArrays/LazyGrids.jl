@@ -1,14 +1,17 @@
 name: CI
+
 on:
+  create:
+    tags:
   push:
     branches:
       - main
     paths-ignore:
-      - '*/*.md'
+      - '**.md'
       - 'docs/**'
   pull_request:
     paths-ignore:
-      - '*/*.md'
+      - '**.md'
       - 'docs/**'
 
 jobs:
@@ -18,10 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version:
-          - '1.6'
-          - '1'
-          - 'nightly'
+        version: ['1.6', '1', 'nightly']
         os:
           - ubuntu-latest
           - macOS-latest
