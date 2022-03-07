@@ -20,6 +20,4 @@ meshgrid(y,x) = (ndgrid(x,y)[[2,1]]...,)
 ```
 
 
-See the
-[Examples](@ref 1-ndgrid)
-tab to the left for details.
+See the Examples tab for details.
