@@ -2,8 +2,24 @@
 # # [LazyGrids ndgrid](@id 1-ndgrid)
 #---------------------------------------------------------
 
-# This page explains the `ndgrid` method(s) in the Julia package
-# [`LazyGrids`](https://github.com/JuliaArrays/LazyGrids.jl).
+#=
+This page explains the `ndgrid` method(s) in the Julia package
+[`LazyGrids`](https://github.com/JuliaArrays/LazyGrids.jl).
+
+This page was generated from a single Julia file:
+[1-ndgrid.jl](@__REPO_ROOT_URL__/1-ndgrid.jl).
+=#
+
+#md # In any such Julia documentation,
+#md # you can access the source code
+#md # using the "Edit on GitHub" link in the top right.
+
+#md # The corresponding notebook can be viewed in
+#md # [nbviewer](http://nbviewer.jupyter.org/) here:
+#md # [`1-ndgrid.ipynb`](@__NBVIEWER_ROOT_URL__/1-ndgrid.ipynb),
+#md # and opened in [binder](https://mybinder.org/) here:
+#md # [`1-ndgrid.ipynb`](@__BINDER_ROOT_URL__/1-ndgrid.ipynb).
+
 
 # ### Setup
 
@@ -15,17 +31,19 @@ using BenchmarkTools: @benchmark
 using InteractiveUtils: versioninfo
 
 
-# ### Overview
+#=
+### Overview
 
-# We begin with simple illustrations.
+We begin with simple illustrations.
 
-# The Julia method `ndgrid_array` in this package
-# is comparable to Matlab's `ndgrid` function.
-# It is given a long name here
-# to discourage its use,
-# because the lazy `ndgrid` version is preferable.
-# The package provides `ndgrid_array`
-# mainly for testing and timing comparisons.
+The Julia method `ndgrid_array` in this package
+is comparable to Matlab's `ndgrid` function.
+It is given a long name here
+to discourage its use,
+because the lazy `ndgrid` version is preferable.
+The package provides `ndgrid_array`
+mainly for testing and timing comparisons.
+=#
 
 (xa, ya) = ndgrid_array(1.0:3.0, 1:2)
 
@@ -62,18 +80,20 @@ sizeof(xl), sizeof(xa)
 sum(xl * xl'), sum(xa * xa')
 
 
-# ### Using lazy `ndgrid`
+#=
+### Using lazy `ndgrid`
 
-# Many applications with multiple variables
-# involve evaluating functions over a *grid* of values.
+Many applications with multiple variables
+involve evaluating functions over a *grid* of values.
 
-# As a simple example (for illustration),
-# one can numerically approximate the area of the unit circle
-# by sampling that circle over a grid of x,y values,
-# corresponding to numerical evaluation of the double integral
-# ``∫ ∫ 1_{\{x^2 + y^2 < 1\}} \, dx \, dy``.
-# There are many ways to implement this approximation in Julia,
-# given a vector of `x` and `y` samples.
+As a simple example (for illustration),
+one can numerically approximate the area of the unit circle
+by sampling that circle over a grid of x,y values,
+corresponding to numerical evaluation of the double integral
+``∫ ∫ 1_{\{x^2 + y^2 < 1\}} \, dx \, dy``.
+There are many ways to implement this approximation in Julia,
+given a vector of `x` and `y` samples.
+=#
 
 Δ = 1/2^10
 x = range(-1, stop=1, step=Δ)
@@ -82,11 +102,13 @@ y = copy(x)
 @inline circle(x::Real, y::Real) = abs2(x) + abs2(y) < 1
 @inline circle(xy::NTuple{2}) = circle(xy...)
 
-# The documentation below has many timing comparisons.
-# The times in the Julia comments are on a 2017 iMac with Julia 1.6.1;
-# the times printed out are whatever server GitHub actions uses.
-# Using a trick to [capture output](https://fredrikekre.github.io/Literate.jl/v2/generated/example/#Output-Capturing),
-# let's find out:
+#=
+The documentation below has many timing comparisons.
+The times in the Julia comments are on a 2017 iMac with Julia 1.6.1;
+the times printed out are whatever server GitHub actions uses.
+Using a trick to [capture output](https://fredrikekre.github.io/Literate.jl/v2/generated/example/#Output-Capturing),
+let's find out:
+=#
 
 io = IOBuffer()
 versioninfo(io)
@@ -117,11 +139,13 @@ btime(t)
 area(xx,yy) = sum(circle.(xx,yy)) * Δ^2
 
 
-# Users coming from Matlab who are unfamiliar with its newer broadcast
-# capabilities might use an `ndgrid` of arrays, like in the following code,
-# to compute the area.
-# But this array approach is much slower and uses much more memory,
-# so it does not scale well to higher dimensions.
+#=
+Users coming from Matlab who are unfamiliar with its newer broadcast
+capabilities might use an `ndgrid` of arrays, like in the following code,
+to compute the area.
+But this array approach is much slower and uses much more memory,
+so it does not scale well to higher dimensions.
+=#
 
 function area_array(x, y)
     (xa, ya) = ndgrid_array(x, y)
@@ -132,12 +156,14 @@ t = @benchmark area_array($x, $y) # 21.4 ms (11 allocations: 64.57 MiB)
 btime(t)
 
 
-# To be fair, one might have multiple uses of the grids `xa,ya`
-# so perhaps they should be excluded from the timing.
-# Separating that allocation makes the timing look faster,
-# but it still uses a lot of memory,
-# both for allocating the grids, and for the `circle.` broadcast
-# in the `area` function above:
+#=
+To be fair, one might have multiple uses of the grids `xa,ya`
+so perhaps they should be excluded from the timing.
+Separating that allocation makes the timing look faster,
+but it still uses a lot of memory,
+both for allocating the grids, and for the `circle.` broadcast
+in the `area` function above:
+=#
 
 (xa, ya) = ndgrid_array(x, y)
 @assert area(xa, ya) ≈ area0
@@ -162,10 +188,12 @@ t = @benchmark area($xl,$yl) # 3.7 ms (7 allocations: 516.92 KiB)
 btime(t)
 
 
-# Furthermore, creating this lazy ndgrid is so efficient
-# that we can include its construction time
-# and still have performance comparable to the array version
-# that had pre-allocated arrays.
+#=
+Furthermore, creating this lazy ndgrid is so efficient
+that we can include its construction time
+and still have performance comparable to the array version
+that had pre-allocated arrays.
+=#
 
 function area_lazy(x, y)
     (xl, yl) = ndgrid(x, y)
@@ -176,14 +204,16 @@ t = @benchmark area_lazy($x, $y) # 3.7 ms (7 allocations: 516.92 KiB)
 btime(t)
 
 
-# ### More details
+#=
+### More details
 
-# The comparisons below here might be more
-# for the curiosity of the package developers
-# than for most users...
+The comparisons below here might be more
+for the curiosity of the package developers
+than for most users...
 
-# One can preallocate memory to store the `circle.` array,
-# to avoid additional memory during the area calculation:
+One can preallocate memory to store the `circle.` array,
+to avoid additional memory during the area calculation:
+=#
 
 out = Array{Float64}(undef, length(x), length(y))
 function area!(xx, yy)
@@ -229,10 +259,12 @@ t = @benchmark area_ci(xa,ya) # 5.9 ms (3 allocations: 48 bytes)
 btime(t)
 
 
-# Alternatively one can use a linear index for loop,
-# that also avoids the extra memory of `circle.` above,
-# but is slower, especially for the lazy arrays
-# that are optimized for Cartesian indexing:
+#=
+Alternatively one can use a linear index for loop,
+that also avoids the extra memory of `circle.` above,
+but is slower, especially for the lazy arrays
+that are optimized for Cartesian indexing:
+=#
 
 function area_for2(xx,yy)
     size(xx) == size(yy) || throw("size")
@@ -252,10 +284,12 @@ t = @benchmark area_for2($xl, $yl) # 15.4 ms (3 allocations: 48 bytes)
 btime(t)
 
 
-# Some Julia users would
-# [recommend using broadcast](https://discourse.julialang.org/t/meshgrid-function-in-julia/48679/25).
-# In this case, broadcast is reasonably fast, but still uses a lot of memory
-# for the `circle.` output in the simplest implementation.
+#=
+Some Julia users would
+[recommend using broadcast](https://discourse.julialang.org/t/meshgrid-function-in-julia/48679/25).
+In this case, broadcast is reasonably fast, but still uses a lot of memory
+for the `circle.` output in the simplest implementation.
+=#
 
 areab(x,y) = sum(circle.(x,y')) * Δ^2
 @assert areab(x,y) ≈ area0
@@ -296,10 +330,12 @@ sphere(x::Real,y::Real,z::Real) = abs2(x) + abs2(y) + abs2(z) < 1
 sphere(r::NTuple) = sum(abs2, r) < 1
 
 
-# Storing three 3D arrays of size 2049^3 Float64 would take 192GB,
-# so already we must greatly reduce the sampling to use either
-# `broadcast` or `ndgrid_array`.
-# Furthermore, the `broadcast` requires annoying `reshape` steps:
+#=
+Storing three 3D arrays of size 2049^3 Float64 would take 192GB,
+so already we must greatly reduce the sampling to use either
+`broadcast` or `ndgrid_array`.
+Furthermore, the `broadcast` requires annoying `reshape` steps:
+=#
 
 Δc = 1/2^8 # coarse grid
 xc = range(-1, stop=1, step=Δc)
@@ -367,11 +403,26 @@ z = copy(x)
 @timeo vol_ci(xlf, ylf, zlf, Δ) # 12.7 sec, 16 bytes
 
 
-# I was hoping that with a lazy grid, now we could explore
-# higher-dimensional spheres.  But with the current `zip` overhead
-# it was too slow, even with coarse grid.
-# @timeo (π^2/2, sum(sphere, zip(ndgrid(xc,xc,xc,xc)...)) * Δc^4)
+#=
+I was hoping that with a lazy grid, now we could explore
+higher-dimensional spheres.  But with the current `zip` overhead
+it was too slow, even with coarse grid.
 
-# Probably I need to learn more about stuff like `pairs(IndexCartesian(), A)`
-# [e.g., this PR](https://github.com/JuliaLang/julia/pull/38150).
-# Another day...
+`@timeo (π^2/2, sum(sphere, zip(ndgrid(xc,xc,xc,xc)...)) * Δc^4)`
+
+Probably I need to learn more about stuff like `pairs(IndexCartesian(), A)`
+[e.g., this PR](https://github.com/JuliaLang/julia/pull/38150).
+Another day...
+=#
+
+
+# ### Reproducibility
+
+# This page was generated with the following version of Julia:
+
+io = IOBuffer(); versioninfo(io); split(String(take!(io)), '\n')
+
+
+# And with the following package versions
+
+import Pkg; Pkg.status()

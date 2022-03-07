@@ -2,8 +2,24 @@
 # # [copyto! test](@id 2-copyto)
 #---------------------------------------------------------
 
-# This page examines `copyto!` speed of the lazy grids in the Julia package
-# [`LazyGrids`](https://github.com/JuliaArrays/LazyGrids.jl).
+#=
+This page examines `copyto!` speed of the lazy grids in the Julia package
+[`LazyGrids`](https://github.com/JuliaArrays/LazyGrids.jl).
+
+This page was generated from a single Julia file:
+[2-copyto.jl](@__REPO_ROOT_URL__/2-copyto.jl).
+=#
+
+#md # In any such Julia documentation,
+#md # you can access the source code
+#md # using the "Edit on GitHub" link in the top right.
+
+#md # The corresponding notebook can be viewed in
+#md # [nbviewer](http://nbviewer.jupyter.org/) here:
+#md # [`2-copyto.ipynb`](@__NBVIEWER_ROOT_URL__/2-copyto.ipynb),
+#md # and opened in [binder](https://mybinder.org/) here:
+#md # [`2-copyto.ipynb`](@__BINDER_ROOT_URL__/2-copyto.ipynb).
+
 
 # ### Setup
 
@@ -12,13 +28,16 @@
 using LazyGrids: ndgrid, ndgrid_array
 using LazyGrids: btime, @timeo # not exported; just for timing tests here
 using BenchmarkTools: @benchmark
+using InteractiveUtils: versioninfo
 
 
-# ### Overview
+#=
+### Overview
 
-# There are 4 sub-types of `AbstractGrids`.
-# Here we focus on the simplest (using `OneTo`)
-# and most general (`AbstractVector`).
+There are 4 sub-types of `AbstractGrids`.
+Here we focus on the simplest (using `OneTo`)
+and most general (`AbstractVector`).
+=#
 
 
 # #### `OneTo`
@@ -59,13 +78,27 @@ tl = @benchmark copyto!(out, xl) # 21.7ms
 btime(tl)
 
 
-# These results suggest that `copyto!` is somewhat slower
-# for a lazy grid than for an `Array`.
-# This drawback could be reduced or possibly even eliminated
-# by adding a dedicated `copyto!` method
-# for lazy grids.
-# Submit an issue or PR if there is a use case
-# that needs faster `copyto!`.
-#
-# See
-# [broadcasting](https://docs.julialang.org/en/v1/manual/interfaces/#man-interfaces-broadcasting).
+#=
+These results suggest that `copyto!` is somewhat slower
+for a lazy grid than for an `Array`.
+This drawback could be reduced or possibly even eliminated
+by adding a dedicated `copyto!` method
+for lazy grids.
+Submit an issue or PR if there is a use case
+that needs faster `copyto!`.
+
+See
+[broadcasting](https://docs.julialang.org/en/v1/manual/interfaces/#man-interfaces-broadcasting).
+=#
+
+
+# ### Reproducibility
+
+# This page was generated with the following version of Julia:
+
+io = IOBuffer(); versioninfo(io); split(String(take!(io)), '\n')
+
+
+# And with the following package versions
+
+import Pkg; Pkg.status()
