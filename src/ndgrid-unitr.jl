@@ -1,9 +1,7 @@
 #=
 ndgrid-unitr.jl
-ndgrid for a set of "UnitRange{Int}" inputs.
+ndgrid type a "UnitRange{Int}" input
 =#
-
-export ndgrid
 
 
 """
@@ -33,23 +31,3 @@ Base.eltype(::GridUR{T}) where T = T
 #   @boundscheck checkbounds(i, d)
     return a.first0 + @inbounds i[d] # i don't want to deal with one(T) here
 end
-
-
-#=
-"""
-    (xg, yg, ...) = ndgrid(a:b, c:d, ...)
-Construct `ndgrid` tuple for `UnitRange{Int}` inputs.
-
-# Example
-
-```jldoctest
-julia> ndgrid(1:2, 3:5)
-([1 1 1; 2 2 2], [3 4 5; 3 4 5])
-```
-"""
-function ndgrid(vs::Vararg{UnitRange{Int}})
-    D = length(vs)
-    dims = ntuple(i -> length(vs[i]), D)
-    return ntuple(i -> GridUR(dims, vs[i], i), D)
-end
-=#

@@ -1,9 +1,7 @@
 #=
 ndgrid-range
-ndgrid for a set of AbstractRange inputs.
+ndgrid type for an AbstractRange input.
 =#
-
-export ndgrid
 
 
 """
@@ -32,24 +30,3 @@ Base.eltype(::GridAR{T}) where T = T
      @boundscheck checkbounds(a, i...)
      return a.first0 + (@inbounds i[d]) * a.step
 end
-
-
-#=
-"""
-    (xg, yg, ...) = ndgrid(v1, v2,, ...)
-Construct `ndgrid` tuple for `AbstractRange` inputs.
-
-# Example
-
-```jldoctest
-julia> ndgrid(1:3, 5:2:7)
-([1 1; 2 2; 3 3], [5 7; 5 7; 5 7])
-```
-"""
-function ndgrid(vs::Vararg{AbstractRange})
-    D = length(vs)
-    dims = ntuple(i -> length(vs[i]), D)
-    T = Tuple{ntuple(i -> GridAR{eltype(vs[i]), i, D}, D)...} # return type
-    return ntuple(i -> GridAR(dims, vs[i], i), D)::T
-end
-=#

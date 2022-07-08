@@ -5,6 +5,7 @@ ndgrid for a set of "OneTo" ranges: probably the simplest possible ndgrid
 
 export ndgrid
 
+
 """
     GridOT{T,d,D} <: AbstractArray{T,D}
 The `d`th component of `D`-dimensional `ndgrid(1:M, 1:N, ...)`
@@ -48,23 +49,3 @@ function ndgrid(n1::Int, ns::Vararg{Int})
     all(>(0), ns) || throw(ArgumentError("$ns ≤ 0"))
     return ndgrid(Base.OneTo.(ns)...)
 end
-
-
-#=
-"""
-    (xg, yg, ...) = ndgrid(Base.OneTo{M}, Base.OneTo{N}, ...)
-Construct `ndgrid` tuple for essentially `ndgrid(1:M, 1:N, ...)`.
-
-# Example
-
-```jldoctest
-julia> ndgrid(Base.OneTo(2), Base.OneTo(3))
-([1 1 1; 2 2 2], [1 2 3; 1 2 3])
-```
-"""
-function ndgrid(os::Vararg{Base.OneTo{Int}})
-    D = length(os)
-    dims = ntuple(i -> os[i].stop, D)
-    return ntuple(i -> GridOT(dims, i), D)
-end
-=#
