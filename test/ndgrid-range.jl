@@ -1,17 +1,18 @@
 # ndgrid-range.jl
 
-using LazyGrids: ndgrid, ndgrid_array, GridAR, GridUR
-using Test: @test, @testset, @test_throws, @inferred, @test_broken
+using LazyGrids: ndgrid, ndgrid_array, GridAR, GridSL, GridUR
+using Test: @test, @testset, @test_throws, @inferred
+
 
 @testset "StepRangeLen" begin
     (x, y) = (1:3, (-3:4)/11)
     (xa, ya) = @inferred ndgrid_array(x, y)
     (xl, yl) = @inferred ndgrid(x, y)
+    @test yl isa GridSL
     @test xl[:,1] == x
     @test xa[:,1] == x
-    @test_broken yl[1,:] == y # todo
-    @test_broken ya[1,:] == y # todo
-#   @which ndgrid(x, y)
+    @test yl[1,:] == y
+    @test ya[1,:] == y
 end
 
 

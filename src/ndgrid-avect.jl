@@ -22,9 +22,7 @@ struct GridAV{T,d,D} <: AbstractGrid{T,d,D}
 end
 
 #Base.size(a::GridAV) = a.dims
-Base.size(a::AbstractGrid) = a.dims
 #Base.eltype(::GridAV{T}) where T = T
-Base.eltype(::AbstractGrid{T}) where T = T
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridAV{T,d,D},
@@ -39,13 +37,16 @@ end
 
 _grid(d::Int, dims::Dims, v::Base.OneTo{T}) where T = GridOT(T, dims, d)
 _grid(d::Int, dims::Dims, v::UnitRange)      = GridUR(dims, v, d)
+_grid(d::Int, dims::Dims, v::StepRangeLen)   = GridSL(dims, v, d)
 _grid(d::Int, dims::Dims, v::AbstractRange)  = GridAR(dims, v, d)
 _grid(d::Int, dims::Dims, v::AbstractVector) = GridAV(dims, v, d)
 
-_grid_type(d::Int, D::Int, ::Base.OneTo{T}) where T = GridOT{T, d, D}
-_grid_type(d::Int, D::Int, ::UnitRange{T})  where T = GridUR{T, d, D}
+_grid_type(d::Int, D::Int, ::Base.OneTo{T})     where T = GridOT{T, d, D}
+_grid_type(d::Int, D::Int, ::UnitRange{T})      where T = GridUR{T, d, D}
 _grid_type(d::Int, D::Int, ::AbstractRange{T})  where T = GridAR{T, d, D}
 _grid_type(d::Int, D::Int, ::AbstractVector{T}) where T = GridAV{T, d, D}
+_grid_type(d::Int, D::Int, ::StepRangeLen{T,R,S,L}) where {T,R,S,L} =
+    GridSL{T, d, D, R, S, L}
 
 
 """
