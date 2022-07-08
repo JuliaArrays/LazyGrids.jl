@@ -34,9 +34,9 @@ using InteractiveUtils: versioninfo
 #=
 ### Overview
 
-There are 4 sub-types of `AbstractGrids`.
+There are several sub-types of `AbstractGrids`.
 Here we focus on the simplest (using `OneTo`)
-and most general (`AbstractVector`).
+and the most general (`AbstractVector`).
 =#
 
 

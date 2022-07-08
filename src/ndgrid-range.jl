@@ -1,15 +1,13 @@
 #=
 ndgrid-range
-ndgrid for a set of AbstractRange inputs.
+ndgrid type for an AbstractRange input.
 =#
-
-export ndgrid
 
 
 """
     GridAR{T,d,D} <: AbstractGrid{T,d,D}
-The `d`th component of `D`-dimensional `ndgrid(x, y ...)`
-where `1 ≤ d ≤ D` and `x, y, ...` are each an `AbstractRange`.
+The `d`th component of `D`-dimensional `ndgrid(v₁, v₂, ...)`
+where `1 ≤ d ≤ D` and `v_d` is an `AbstractRange`.
 """
 struct GridAR{T,d,D} <: AbstractGrid{T,d,D}
     dims::Dims{D}
@@ -22,8 +20,6 @@ struct GridAR{T,d,D} <: AbstractGrid{T,d,D}
     end
 end
 
-Base.size(a::GridAR) = a.dims
-Base.eltype(::GridAR{T}) where T = T
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridAR{T,d,D},
@@ -32,24 +28,3 @@ Base.eltype(::GridAR{T}) where T = T
      @boundscheck checkbounds(a, i...)
      return a.first0 + (@inbounds i[d]) * a.step
 end
-
-
-#=
-"""
-    (xg, yg, ...) = ndgrid(v1, v2,, ...)
-Construct `ndgrid` tuple for `AbstractRange` inputs.
-
-# Example
-
-```jldoctest
-julia> ndgrid(1:3, 5:2:7)
-([1 1; 2 2; 3 3], [5 7; 5 7; 5 7])
-```
-"""
-function ndgrid(vs::Vararg{AbstractRange})
-    D = length(vs)
-    dims = ntuple(i -> length(vs[i]), D)
-    T = Tuple{ntuple(i -> GridAR{eltype(vs[i]), i, D}, D)...} # return type
-    return ntuple(i -> GridAR(dims, vs[i], i), D)::T
-end
-=#
