@@ -9,16 +9,18 @@ ndgrid type for an StepRangeLen input.
 The `d`th component of `D`-dimensional `ndgrid(v₁, v₂, ...)`
 where `1 ≤ d ≤ D` and `v_d` is a `StepRangeLen`.
 """
-struct GridSL{T,d,D, R, S, L} <: AbstractGrid{T,d,D}
+struct GridSL{T,d,D, R, S} <: AbstractGrid{T,d,D}
     dims::Dims{D}
     ref::R
     step::S
-    len::L
+    len::Int
     offset::Int
 
-    function GridSL(dims::Dims{D}, v::StepRangeLen{T,R,S,L}, d::Int) where {D, T, R, S, L}
+    function GridSL(dims::Dims{D}, v::StepRangeLen{T,R,S}, d::Int) where {D, T, R, S}
         1 ≤ d ≤ D || throw(ArgumentError("$d for $dims"))
-        new{T,d,D,R,S,L}(dims, v.ref, v.step, v.len, v.offset)
+        eltype(v.len) == Int || throw("non-Int v.len unsuported")
+        eltype(v.offset) == Int || throw("non-Int v.offset unsuported")
+        new{T,d,D,R,S}(dims, v.ref, v.step, v.len, v.offset)
     end
 end
 
