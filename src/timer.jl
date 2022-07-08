@@ -5,7 +5,7 @@ Utilities used in the Literate example
 
 using Statistics: median
 using Base: gc_num, gc_alloc_count, GC_Diff, timev_print
-using Base: cumulative_compile_time_ns_before, cumulative_compile_time_ns_after
+#using Base: cumulative_compile_time_ns_before, cumulative_compile_time_ns_after
 
 
 # cf https://github.com/JuliaLang/julia/blob/6aaedecc447e3d8226d5027fb13d0c3cbfbfea2a/base/timing.jl#L327-L362
