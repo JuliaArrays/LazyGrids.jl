@@ -5,10 +5,11 @@ ndgrid for a set of AbstractVector inputs.
 
 export ndgrid
 
+
 """
     GridAV{T,d,D} <: AbstractGrid{T,d,D}
-The `d`th component of `D`-dimensional `ndgrid(x, y, ...)`
-where `1 ≤ d ≤ D` and `x, y, ...` are each an `AbstractVector`.
+The `d`th component of `D`-dimensional `ndgrid(v₁, v₂, ...)`
+where `1 ≤ d ≤ D` and `v_d` is an `AbstractVector`.
 """
 struct GridAV{T,d,D} <: AbstractGrid{T,d,D}
     dims::Dims{D}
@@ -20,8 +21,10 @@ struct GridAV{T,d,D} <: AbstractGrid{T,d,D}
     end
 end
 
-Base.size(a::GridAV) = a.dims
-Base.eltype(::GridAV{T}) where T = T
+#Base.size(a::GridAV) = a.dims
+Base.size(a::AbstractGrid) = a.dims
+#Base.eltype(::GridAV{T}) where T = T
+Base.eltype(::AbstractGrid{T}) where T = T
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridAV{T,d,D},

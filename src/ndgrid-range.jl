@@ -6,8 +6,8 @@ ndgrid type for an AbstractRange input.
 
 """
     GridAR{T,d,D} <: AbstractGrid{T,d,D}
-The `d`th component of `D`-dimensional `ndgrid(x, y ...)`
-where `1 ≤ d ≤ D` and `x, y, ...` are each an `AbstractRange`.
+The `d`th component of `D`-dimensional `ndgrid(v₁, v₂, ...)`
+where `1 ≤ d ≤ D` and `v_d` is an `AbstractRange`.
 """
 struct GridAR{T,d,D} <: AbstractGrid{T,d,D}
     dims::Dims{D}
@@ -20,8 +20,8 @@ struct GridAR{T,d,D} <: AbstractGrid{T,d,D}
     end
 end
 
-Base.size(a::GridAR) = a.dims
-Base.eltype(::GridAR{T}) where T = T
+#Base.size(a::GridAR) = a.dims
+#Base.eltype(::GridAR{T}) where T = T
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridAR{T,d,D},

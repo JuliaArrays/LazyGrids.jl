@@ -21,8 +21,8 @@ struct GridOT{T,d,D} <: AbstractGrid{T,d,D}
     end
 end
 
-Base.size(a::GridOT) = a.dims
-# Base.eltype(::GridOT) = Int # default
+#Base.size(a::GridOT) = a.dims
+#Base.eltype(::GridOT) = Int # default
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridOT{T,d,D},
