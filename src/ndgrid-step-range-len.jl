@@ -24,8 +24,6 @@ struct GridSL{T,d,D, R, S} <: AbstractGrid{T,d,D}
     end
 end
 
-#Base.size(a::GridSL) = a.dims
-#Base.eltype(::GridSL{T}) where T = T
 
 # note: Base range.jl uses unsafe_getindex for this
 @inline Base.@propagate_inbounds function Base.getindex(

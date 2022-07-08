@@ -21,8 +21,6 @@ struct GridAV{T,d,D} <: AbstractGrid{T,d,D}
     end
 end
 
-#Base.size(a::GridAV) = a.dims
-#Base.eltype(::GridAV{T}) where T = T
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridAV{T,d,D},

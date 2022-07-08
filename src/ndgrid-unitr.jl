@@ -20,8 +20,6 @@ struct GridUR{T,d,D} <: AbstractGrid{T,d,D}
     end
 end
 
-#Base.size(a::GridUR) = a.dims
-#Base.eltype(::GridUR{T}) where T = T
 
 @inline Base.@propagate_inbounds function Base.getindex(
     a::GridUR{T,d,D},
