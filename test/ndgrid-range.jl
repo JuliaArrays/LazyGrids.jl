@@ -17,7 +17,15 @@ end
 
 
 @testset "range" begin
-    (x, y, z) = (LinRange(0,1,4), 1:1//2:3, 6:9)
+    (x, y) = (range(6,9,4), LinRange(0,1,4))
+    (xl, yl) = @inferred ndgrid(x, y)
+    @test eltype(xl) === eltype(x)
+    @test eltype(yl) === eltype(y)
+    @test size(xl) === (length(x), length(y))
+    @test xl isa GridSL
+    @test yl isa GridAR
+
+    (x, y, z) = (range(0,1,4), 1:1//2:3, 6:9)
     (xa, ya, za) = @inferred ndgrid_array(x, y, z)
     (xl, yl, zl) = @inferred ndgrid(x, y, z)
 
@@ -25,7 +33,7 @@ end
     @test eltype(yl) === eltype(y)
     @test eltype(zl) === eltype(z)
     @test size(xl) === (length(x), length(y), length(z))
-    @test xl isa GridAR
+    @test xl isa GridSL
     @test yl isa GridAR
     @test zl isa GridUR
     @test xl ≈ xa

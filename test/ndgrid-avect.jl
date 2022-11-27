@@ -4,7 +4,7 @@ using LazyGrids: ndgrid, ndgrid_array, GridAV, GridUR
 using Test: @test, @testset, @test_throws, @inferred
 
 @testset "avect" begin
-    (x, y, z) = ([:a,:b,:c], LinRange(0,1,4), 5:9)
+    (x, y, z) = ([:a,:b,:c], range(0,1,4), 5:9)
     (xa, ya, za) = @inferred ndgrid_array(x, y, z)
     (xl, yl, zl) = @inferred ndgrid(x, y, z)
 
@@ -13,7 +13,7 @@ using Test: @test, @testset, @test_throws, @inferred
     @test eltype(zl) === eltype(z)
     @test size(xl) === (length(x), length(y), length(z))
     @test xl isa GridAV
-    @test yl isa GridAR
+    @test yl isa GridSL
     @test zl isa GridUR
     @test xl == xa
     @test yl ≈ ya
