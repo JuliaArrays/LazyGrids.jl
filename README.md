@@ -44,8 +44,8 @@ julia> yg
  3.0  3.5  4.0
  3.0  3.5  4.0
 
-julia> x = LinRange(-1,1,1001)
-1001-element LinRange{Float64}: ...
+julia> x = range(-1,1,1001)
+-1.0:0.002:1.0
 
 julia> (xg, yg, zg) = ndgrid(x, x, x)
 {... lots of output ...}
@@ -63,6 +63,11 @@ julia> sizeof(xg) # show number of bytes used
 * https://github.com/mcabbott/LazyStack.jl
 * https://github.com/ChrisRackauckas/VectorizedRoutines.jl
 * https://github.com/JuliaArrays/RangeArrays.jl
+
+
+### Compatibility
+
+Tested with Julia ≥ 1.7.
 
 
 <!-- URLs -->
