@@ -85,7 +85,7 @@ Tested with Julia ≥ 1.7.
 [docs-stable-url]: https://JuliaArrays.github.io/LazyGrids.jl/stable
 [docs-dev-img]: https://img.shields.io/badge/docs-dev-blue.svg
 [docs-dev-url]: https://JuliaArrays.github.io/LazyGrids.jl/dev
-[license-img]: http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat
+[license-img]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [license-url]: LICENSE
 [aqua-img]: https://img.shields.io/badge/Aqua.jl-%F0%9F%8C%A2-aqua.svg
 [aqua-url]: https://github.com/JuliaTesting/Aqua.jl
