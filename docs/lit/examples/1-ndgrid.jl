@@ -1,24 +1,11 @@
-#---------------------------------------------------------
-# # [LazyGrids ndgrid](@id 1-ndgrid)
-#---------------------------------------------------------
-
 #=
+# [LazyGrids ndgrid](@id 1-ndgrid)
+
 This page explains the `ndgrid` method(s) in the Julia package
 [`LazyGrids`](https://github.com/JuliaArrays/LazyGrids.jl).
-
-This page was generated from a single Julia file:
-[1-ndgrid.jl](@__REPO_ROOT_URL__/1-ndgrid.jl).
 =#
 
-#md # In any such Julia documentation,
-#md # you can access the source code
-#md # using the "Edit on GitHub" link in the top right.
-
-#md # The corresponding notebook can be viewed in
-#md # [nbviewer](https://nbviewer.org/) here:
-#md # [`1-ndgrid.ipynb`](@__NBVIEWER_ROOT_URL__/1-ndgrid.ipynb),
-#md # and opened in [binder](https://mybinder.org/) here:
-#md # [`1-ndgrid.ipynb`](@__BINDER_ROOT_URL__/1-ndgrid.ipynb).
+#srcURL
 
 
 # ### Setup
@@ -32,7 +19,7 @@ using InteractiveUtils: versioninfo
 
 
 #=
-### Overview
+## Overview
 
 We begin with simple illustrations.
 
@@ -81,7 +68,7 @@ sum(xl * xl'), sum(xa * xa')
 
 
 #=
-### Using lazy `ndgrid`
+## Using lazy `ndgrid`
 
 Many applications with multiple variables
 involve evaluating functions over a *grid* of values.
@@ -131,10 +118,12 @@ t = @benchmark method0($x,$y) # 10.5 ms (3 allocations: 48 bytes)
 btime(t)
 
 
-# The loop version does not look much like the math.
-# It often seems natural to think of a grid of x,y values
-# and simply sum over that grid, accounting for the grid spacing,
-# using a function like this:
+#=
+The loop version does not look much like the math.
+It often seems natural to think of a grid of x,y values
+and simply sum over that grid, accounting for the grid spacing,
+using a function like this:
+=#
 
 area(xx,yy) = sum(circle.(xx,yy)) * Δ^2
 
@@ -322,7 +311,7 @@ t = @benchmark areap($x, $y) # 9.9 ms (3 allocations: 48 bytes)
 btime(t)
 
 
-# ### 3D case
+# ## 3D case
 
 # A 3D example is finding (verifying) the volume of a unit sphere.
 
@@ -416,13 +405,4 @@ Another day...
 =#
 
 
-# ### Reproducibility
-
-# This page was generated with the following version of Julia:
-
-io = IOBuffer(); versioninfo(io); split(String(take!(io)), '\n')
-
-
-# And with the following package versions
-
-import Pkg; Pkg.status()
+include("../../../inc/reproduce.jl")
