@@ -14,9 +14,8 @@ where `1 ≤ d ≤ D`.
 struct GridOT{T,d,D} <: AbstractGrid{T,d,D}
     dims::Dims{D}
 
-    function GridOT(T::DataType, dims::Dims{D}, d::Int) where D
+    function GridOT(T::Type{<:Integer}, dims::Dims{D}, d::Int) where D
         1 ≤ d ≤ D || throw(ArgumentError("$d for $dims"))
-        T <: Integer || throw(ArgumentError("T = $T"))
         new{T,d,D}(dims)
     end
 end
