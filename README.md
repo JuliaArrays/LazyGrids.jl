@@ -67,7 +67,7 @@ julia> sizeof(xg) # show number of bytes used
 
 ### Compatibility
 
-Tested with Julia ≥ 1.9.
+Tested with Julia ≥ 1.10.
 
 
 <!-- URLs -->
