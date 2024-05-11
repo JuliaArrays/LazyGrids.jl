@@ -40,7 +40,7 @@ julia> xg
  2  2  2
 
 julia> yg
-2×3 LazyGrids.GridAR{Float64, 2, 2}:
+2×3 LazyGrids.GridSL{Float64, 2, 2, Base.TwicePrecision{Float64}, Base.TwicePrecision{Float64}}:
  3.0  3.5  4.0
  3.0  3.5  4.0
 
@@ -54,7 +54,7 @@ julia> size(xg) # show array dimensions
 (1001, 1001, 1001)
 
 julia> sizeof(xg) # show number of bytes used
-40
+72
 ```
 
 ## Related packages
