@@ -42,7 +42,7 @@ _grid(d::Int, dims::Dims, v::AbstractVector) = GridAV(dims, v, d)
 _grid_type(d::Int, D::Int, ::Base.OneTo{T})     where T = GridOT{T, d, D}
 _grid_type(d::Int, D::Int, ::UnitRange{T})      where T = GridUR{T, d, D}
 _grid_type(d::Int, D::Int, ::StepRangeLen{T,R,S}) where {T,R,S} = GridSL{T, d, D, R, S}
-_grid_type(d::Int, D::Int, ::AbstractRange{T})  where T = GridAR{T, d, D}
+_grid_type(d::Int, D::Int, v::AbstractRange{T})  where T = GridAR{T, d, D, typeof(step(v))}
 _grid_type(d::Int, D::Int, ::AbstractVector{T}) where T = GridAV{T, d, D}
 
 
