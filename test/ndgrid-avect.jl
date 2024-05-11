@@ -1,4 +1,4 @@
-# ndgrid-avect.jl
+# ndgrid-avect.jl test AbstractVector types
 
 using LazyGrids: ndgrid, ndgrid_array, GridAV, GridUR
 using Test: @test, @testset, @test_throws, @inferred
