@@ -18,8 +18,8 @@ struct GridSL{T,d,D, R, S} <: AbstractGrid{T,d,D}
 
     function GridSL(dims::Dims{D}, v::StepRangeLen{T,R,S}, d::Int) where {D, T, R, S}
         1 ≤ d ≤ D || throw(ArgumentError("$d for $dims"))
-        eltype(v.len) == Int || throw("non-Int v.len unsuported")
-        eltype(v.offset) == Int || throw("non-Int v.offset unsuported")
+        eltype(v.len) == Int || throw("non-Int v.len unsupported")
+        eltype(v.offset) == Int || throw("non-Int v.offset unsupported")
         new{T,d,D,R,S}(dims, v.ref, v.step, v.len, v.offset)
     end
 end
