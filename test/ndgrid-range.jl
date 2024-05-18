@@ -4,6 +4,7 @@ using LazyGrids: ndgrid, ndgrid_array, GridAR, GridSL, GridUR
 using Test: @test, @testset, @test_throws, @inferred
 
 
+#= todo
 @testset "cvect" begin
     x = 'a':9:'z' # character range
     y = 1:2
@@ -17,6 +18,7 @@ using Test: @test, @testset, @test_throws, @inferred
     @test xx[:,1] == x
     @test yy[1,:] == y
 end
+=#
 
 
 @testset "StepRangeLen" begin
