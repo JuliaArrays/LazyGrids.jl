@@ -18,7 +18,6 @@ using Test: @test, @testset, @test_throws, @inferred
     @test xx[:,1] == x
     @test yy[1,:] == y
 end
-=#
 
 
 @testset "StepRangeLen" begin
@@ -31,6 +30,7 @@ end
     @test yl[1,:] == y
     @test ya[1,:] == y
 end
+=#
 
 
 @testset "range" begin
