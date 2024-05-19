@@ -11,6 +11,9 @@ https://github.com/JuliaArrays/LazyGrids.jl
 [![license][license-img]][license-url]
 [![Aqua QA][aqua-img]][aqua-url]
 [![code-style][code-blue-img]][code-blue-url]
+[![deps](https://juliahub.com/docs/LazyGrids/deps.svg)](https://juliahub.com/ui/Packages/LazyGrids)
+[![version](https://juliahub.com/docs/LazyGrids/version.svg)](https://juliahub.com/ui/Packages/LazyGrids)
+[![pkgeval](https://juliahub.com/docs/LazyGrids/pkgeval.svg)](https://juliahub.com/ui/Packages/LazyGrids)
 
 ## Methods
 
