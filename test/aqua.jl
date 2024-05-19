@@ -1,4 +1,4 @@
-using LazyGrids
+using LazyGrids: LazyGrids
 import Aqua
 using Test: @testset
 
