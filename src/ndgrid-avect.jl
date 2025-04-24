@@ -65,7 +65,7 @@ julia> xg
  3  3
 
 julia> yg
-3×2 LazyGrids.GridAV{Symbol, 2, 2}:
+3×2 LazyGrids.GridAV{Symbol, 2, 2, Vector{Symbol}}:
  :a  :b
  :a  :b
  :a  :b
