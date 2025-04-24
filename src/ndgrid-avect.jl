@@ -11,13 +11,13 @@ export ndgrid
 The `d`th component of `D`-dimensional `ndgrid(v₁, v₂, ...)`
 where `1 ≤ d ≤ D` and `v_d` is an `AbstractVector`.
 """
-struct GridAV{T,d,D} <: AbstractGrid{T,d,D}
+struct GridAV{T,d,D,V <: AbstractVector{T}} <: AbstractGrid{T,d,D}
     dims::Dims{D}
-    v::AbstractVector{T}
+    v::V
 
-    function GridAV(dims::Dims{D}, v::AbstractVector{T}, d::Int) where {D, T}
+    function GridAV(dims::Dims{D}, v::V, d::Int) where {D, T, V <: AbstractVector{T}}
         1 ≤ d ≤ D || throw(ArgumentError("$d for $dims"))
-        new{T,d,D}(dims, v)
+        new{T,d,D,V}(dims, v)
     end
 end
 
@@ -43,7 +43,7 @@ _grid_type(d::Int, D::Int, ::Base.OneTo{T})     where T = GridOT{T, d, D}
 _grid_type(d::Int, D::Int, ::UnitRange{T})      where T = GridUR{T, d, D}
 _grid_type(d::Int, D::Int, ::StepRangeLen{T,R,S}) where {T,R,S} = GridSL{T, d, D, R, S}
 _grid_type(d::Int, D::Int, v::AbstractRange{T})  where T = GridAR{T, d, D, typeof(step(v))}
-_grid_type(d::Int, D::Int, ::AbstractVector{T}) where T = GridAV{T, d, D}
+_grid_type(d::Int, D::Int, ::V) where {T, V <: AbstractVector{T}} = GridAV{T, d, D, V}
 
 
 """
