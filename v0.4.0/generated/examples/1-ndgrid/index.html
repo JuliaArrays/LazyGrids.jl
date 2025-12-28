@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>LazyGrids ndgrid · LazyGrids.jl</title><script data-outdated-warner src="../../../assets/warner.js"></script><link rel="canonical" href="https://JuliaArrays.github.io/LazyGrids.jl/stable/generated/examples/1-ndgrid/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.044/juliamono.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../../assets/documenter.js"></script><script src="../../../siteinfo.js"></script><script src="../../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../../assets/themeswap.js"></script><link href="../../../assets/custom.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../../">LazyGrids.jl</a></span></div><form class="docs-search" action="../../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../../">Home</a></li><li><a class="tocitem" href="../../../methods/">Methods</a></li><li><span class="tocitem">Examples</span><ul><li class="is-active"><a class="tocitem" href>LazyGrids ndgrid</a></li><li><a class="tocitem" href="../2-copyto/">copyto! test</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>LazyGrids ndgrid</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>LazyGrids ndgrid</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/JuliaArrays/LazyGrids.jl/blob/main/docs/lit/examples/docs/lit/examples/1-ndgrid.jl" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="ndgrid"><a class="docs-heading-anchor" href="#ndgrid">LazyGrids ndgrid</a><a id="ndgrid-1"></a><a class="docs-heading-anchor-permalink" href="#ndgrid" title="Permalink"></a></h1><p>This page explains the <code>ndgrid</code> method(s) in the Julia package <a href="https://github.com/JuliaArrays/LazyGrids.jl"><code>LazyGrids</code></a>.</p><p>This page was generated from a single Julia file: <a href="https://github.com/JuliaArrays/LazyGrids.jl/blob/main/docs/lit/examples/1-ndgrid.jl">1-ndgrid.jl</a>.</p><p>In any such Julia documentation, you can access the source code using the &quot;Edit on GitHub&quot; link in the top right.</p><p>The corresponding notebook can be viewed in <a href="http://nbviewer.jupyter.org/">nbviewer</a> here: <a href="https://nbviewer.org/github/JuliaArrays/LazyGrids.jl/tree/gh-pages/dev/generated/examples/1-ndgrid.ipynb"><code>1-ndgrid.ipynb</code></a>, and opened in <a href="https://mybinder.org/">binder</a> here: <a href="https://mybinder.org/v2/gh/JuliaArrays/LazyGrids.jl/gh-pages?filepath=dev/generated/examples/1-ndgrid.ipynb"><code>1-ndgrid.ipynb</code></a>.</p><h3 id="Setup"><a class="docs-heading-anchor" href="#Setup">Setup</a><a id="Setup-1"></a><a class="docs-heading-anchor-permalink" href="#Setup" title="Permalink"></a></h3><p>Packages needed here.</p><pre><code class="language-julia hljs">using LazyGrids: ndgrid, ndgrid_array
+using LazyGrids: btime, @timeo # not exported; just for timing tests here
+using BenchmarkTools: @benchmark
+using InteractiveUtils: versioninfo</code></pre><h3 id="Overview"><a class="docs-heading-anchor" href="#Overview">Overview</a><a id="Overview-1"></a><a class="docs-heading-anchor-permalink" href="#Overview" title="Permalink"></a></h3><p>We begin with simple illustrations.</p><p>The Julia method <code>ndgrid_array</code> in this package is comparable to Matlab&#39;s <code>ndgrid</code> function. It is given a long name here to discourage its use, because the lazy <code>ndgrid</code> version is preferable. The package provides <code>ndgrid_array</code> mainly for testing and timing comparisons.</p><pre><code class="language-julia hljs">(xa, ya) = ndgrid_array(1.0:3.0, 1:2)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">([1.0 1.0; 2.0 2.0; 3.0 3.0], [1 2; 1 2; 1 2])</code></pre><pre><code class="language-julia hljs">xa</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×2 Matrix{Float64}:
+ 1.0  1.0
+ 2.0  2.0
+ 3.0  3.0</code></pre><pre><code class="language-julia hljs">ya</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×2 Matrix{Int64}:
+ 1  2
+ 1  2
+ 1  2</code></pre><p>This package provides a &quot;lazy&quot; version of <code>ndgrid</code> that appears to the user to be the same, but under the hood it is not storing huge arrays.</p><pre><code class="language-julia hljs">(xl, yl) = ndgrid(1.0:3.0, 1:2)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">([1.0 1.0; 2.0 2.0; 3.0 3.0], [1 2; 1 2; 1 2])</code></pre><pre><code class="language-julia hljs">xl</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×2 LazyGrids.GridSL{Float64, 1, 2, Base.TwicePrecision{Float64}, Base.TwicePrecision{Float64}}:
+ 1.0  1.0
+ 2.0  2.0
+ 3.0  3.0</code></pre><pre><code class="language-julia hljs">yl</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3×2 LazyGrids.GridUR{Int64, 2, 2}:
+ 1  2
+ 1  2
+ 1  2</code></pre><p>The following example illustrates the memory savings (thanks to Julia&#39;s powerful <code>AbstractArray</code> type):</p><pre><code class="language-julia hljs">(xl, yl) = ndgrid(1:100, 1:200)
+(xa, ya) = ndgrid_array(1:100, 1:200)
+sizeof(xl), sizeof(xa)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(24, 160000)</code></pre><p>One can do everything with a lazy array that one would expect from a &quot;normal&quot; array, e.g., multiplication and summation:</p><pre><code class="language-julia hljs">sum(xl * xl&#39;), sum(xa * xa&#39;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(5100500000, 5100500000)</code></pre><h3 id="Using-lazy-ndgrid"><a class="docs-heading-anchor" href="#Using-lazy-ndgrid">Using lazy <code>ndgrid</code></a><a id="Using-lazy-ndgrid-1"></a><a class="docs-heading-anchor-permalink" href="#Using-lazy-ndgrid" title="Permalink"></a></h3><p>Many applications with multiple variables involve evaluating functions over a <em>grid</em> of values.</p><p>As a simple example (for illustration), one can numerically approximate the area of the unit circle by sampling that circle over a grid of x,y values, corresponding to numerical evaluation of the double integral <span>$∫ ∫ 1_{\{x^2 + y^2 &lt; 1\}} \, dx \, dy$</span>. There are many ways to implement this approximation in Julia, given a vector of <code>x</code> and <code>y</code> samples.</p><pre><code class="language-julia hljs">Δ = 1/2^10
+x = range(-1, stop=1, step=Δ)
+y = copy(x)
+
+@inline circle(x::Real, y::Real) = abs2(x) + abs2(y) &lt; 1
+@inline circle(xy::NTuple{2}) = circle(xy...)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">circle (generic function with 2 methods)</code></pre><p>The documentation below has many timing comparisons. The times in the Julia comments are on a 2017 iMac with Julia 1.6.1; the times printed out are whatever server GitHub actions uses. Using a trick to <a href="https://fredrikekre.github.io/Literate.jl/v2/generated/example/#Output-Capturing">capture output</a>, let&#39;s find out:</p><pre><code class="language-julia hljs">io = IOBuffer()
+versioninfo(io)
+split(String(take!(io)), &#39;\n&#39;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">9-element Vector{SubString{String}}:
+ &quot;Julia Version 1.7.3&quot;
+ &quot;Commit 742b9abb4d (2022-05-06 12:58 UTC)&quot;
+ &quot;Platform Info:&quot;
+ &quot;  OS: Linux (x86_64-pc-linux-gnu)&quot;
+ &quot;  CPU: Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz&quot;
+ &quot;  WORD_SIZE: 64&quot;
+ &quot;  LIBM: libopenlibm&quot;
+ &quot;  LLVM: libLLVM-12.0.1 (ORCJIT, icelake-server)&quot;
+ &quot;&quot;</code></pre><p>A basic double loop is the C/Fortran way. It uses minimal memory (only 48 bytes) but is somewhat slow.</p><pre><code class="language-julia hljs">function method0(x,y) # basic double loop
+    sum = 0.0
+    for x in x, y in y
+        sum += circle(x,y)
+    end
+    return sum * Δ^2
+end
+
+area0 = method0(x,y)
+t = @benchmark method0($x,$y) # 10.5 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=16.9ms mem=48 alloc=3&quot;</code></pre><p>The loop version does not look much like the math. It often seems natural to think of a grid of x,y values and simply sum over that grid, accounting for the grid spacing, using a function like this:</p><pre><code class="language-julia hljs">area(xx,yy) = sum(circle.(xx,yy)) * Δ^2</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">area (generic function with 1 method)</code></pre><p>Users coming from Matlab who are unfamiliar with its newer broadcast capabilities might use an <code>ndgrid</code> of arrays, like in the following code, to compute the area. But this array approach is much slower and uses much more memory, so it does not scale well to higher dimensions.</p><pre><code class="language-julia hljs">function area_array(x, y)
+    (xa, ya) = ndgrid_array(x, y)
+    return area(xa, ya)
+end
+@assert area_array(x, y) ≈ area0
+t = @benchmark area_array($x, $y) # 21.4 ms (11 allocations: 64.57 MiB)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=337.7ms mem=67703920 alloc=11&quot;</code></pre><p>To be fair, one might have multiple uses of the grids <code>xa,ya</code> so perhaps they should be excluded from the timing. Separating that allocation makes the timing look faster, but it still uses a lot of memory, both for allocating the grids, and for the <code>circle.</code> broadcast in the <code>area</code> function above:</p><pre><code class="language-julia hljs">(xa, ya) = ndgrid_array(x, y)
+@assert area(xa, ya) ≈ area0
+t = @benchmark area($xa, $ya) # 5.2 ms (7 allocations: 516.92 KiB)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=4.8ms mem=529296 alloc=7&quot;</code></pre><p>The main point of this package is to provide a lazy version of <code>ndgrid</code> that uses minimal memory.</p><pre><code class="language-julia hljs">(xl, yl) = ndgrid(x, y)
+@assert xl == xa
+@assert yl == ya
+sizeof(xa), sizeof(xl)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(33587208, 64)</code></pre><p>Now there is essentially no memory overhead for the grids, but memory is still used for the <code>circle.</code> broadcast.</p><pre><code class="language-julia hljs">@assert area(xl,yl) ≈ area0
+t = @benchmark area($xl,$yl) # 3.7 ms (7 allocations: 516.92 KiB)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=304.4ms mem=529296 alloc=7&quot;</code></pre><p>Furthermore, creating this lazy ndgrid is so efficient that we can include its construction time and still have performance comparable to the array version that had pre-allocated arrays.</p><pre><code class="language-julia hljs">function area_lazy(x, y)
+    (xl, yl) = ndgrid(x, y)
+    return area(xl, yl)
+end
+@assert area_lazy(x, y) ≈ area0
+t = @benchmark area_lazy($x, $y) # 3.7 ms (7 allocations: 516.92 KiB)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=304.4ms mem=529296 alloc=7&quot;</code></pre><h3 id="More-details"><a class="docs-heading-anchor" href="#More-details">More details</a><a id="More-details-1"></a><a class="docs-heading-anchor-permalink" href="#More-details" title="Permalink"></a></h3><p>The comparisons below here might be more for the curiosity of the package developers than for most users...</p><p>One can preallocate memory to store the <code>circle.</code> array, to avoid additional memory during the area calculation:</p><pre><code class="language-julia hljs">out = Array{Float64}(undef, length(x), length(y))
+function area!(xx, yy)
+    global out .= circle.(xx,yy)
+    return sum(out) * Δ^2
+end
+@assert area!(xl,yl) ≈ area0
+t = @benchmark area!(xl,yl) # 4.8 ms (4 allocations: 128 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=307.6ms mem=192 alloc=4&quot;</code></pre><p>Interestingly, the lazy version is <em>faster</em> than the array version, presumably because of the overheard of moving data from RAM to CPU:</p><pre><code class="language-julia hljs">@assert area!(xa,ya) ≈ area0
+t = @benchmark area!(xa,ya) # 6.2 ms (4 allocations: 80 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=8.0ms mem=80 alloc=4&quot;</code></pre><p>One can avoid allocating the output array by using a loop with <a href="https://julialang.org/blog/2016/02/iteration">CartesianIndices</a>:</p><pre><code class="language-julia hljs">function area_ci(xx, yy)
+    size(xx) == size(yy) || throw(&quot;size&quot;)
+    sum = 0.0
+    @inbounds for c in CartesianIndices(xx)
+        sum += circle(xx[c], yy[c])
+    end
+    return sum * Δ^2
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">area_ci (generic function with 1 method)</code></pre><p>With this approach the lazy version is a bit faster than the array version:</p><pre><code class="language-julia hljs">@assert area_ci(xl,yl) ≈ area0
+t = @benchmark area_ci(xl,yl) # 5.2 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=289.0ms mem=48 alloc=3&quot;</code></pre><pre><code class="language-julia hljs">@assert area_ci(xa,ya) ≈ area0
+t = @benchmark area_ci(xa,ya) # 5.9 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=11.9ms mem=48 alloc=3&quot;</code></pre><p>Alternatively one can use a linear index for loop, that also avoids the extra memory of <code>circle.</code> above, but is slower, especially for the lazy arrays that are optimized for Cartesian indexing:</p><pre><code class="language-julia hljs">function area_for2(xx,yy)
+    size(xx) == size(yy) || throw(&quot;size&quot;)
+    sum = 0.0
+    @inbounds for i in 1:length(xx)
+        sum += circle(xx[i], yy[i])
+    end
+    return sum * Δ^2
+end
+@assert area_for2(xa, ya) ≈ area0
+t = @benchmark area_for2($xa, $ya) # 5.9 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=11.9ms mem=48 alloc=3&quot;</code></pre><pre><code class="language-julia hljs">@assert area_for2(xl, yl) ≈ area0
+t = @benchmark area_for2($xl, $yl) # 15.4 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=224.0ms mem=48 alloc=3&quot;</code></pre><p>Some Julia users would <a href="https://discourse.julialang.org/t/meshgrid-function-in-julia/48679/25">recommend using broadcast</a>. In this case, broadcast is reasonably fast, but still uses a lot of memory for the <code>circle.</code> output in the simplest implementation.</p><pre><code class="language-julia hljs">areab(x,y) = sum(circle.(x,y&#39;)) * Δ^2
+@assert areab(x,y) ≈ area0
+t = @benchmark areab($x,$y) # 11.6 ms (7 allocations: 516.92 KiB)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=15.1ms mem=529296 alloc=7&quot;</code></pre><p>Using <code>zip</code> can avoid the &quot;extra&quot; memory beyond the grids, but seems to have some undesirable overhead, presumably because <code>zip</code> uses linear indexing:</p><pre><code class="language-julia hljs">areaz(xa, ya) = sum(circle, zip(xa,ya)) * Δ^2
+@assert areaz(xa, ya) ≈ area0
+t = @benchmark areaz($xa, $ya) # 3.9 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=6.2ms mem=48 alloc=3&quot;</code></pre><pre><code class="language-julia hljs">@assert areaz(xl, yl) ≈ area0
+t = @benchmark areaz($xl, $yl) # 12.2 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=279.4ms mem=48 alloc=3&quot;</code></pre><p>One can also ensure low memory by using a product iterator, but the code starts to look pretty different from the math at this point and it is not much faster than broadcast here.</p><pre><code class="language-julia hljs">areap(x,y) = sum(circle, Iterators.product(x, y)) * Δ^2
+@assert areap(x,y) ≈ area0
+t = @benchmark areap($x, $y) # 9.9 ms (3 allocations: 48 bytes)
+btime(t)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=16.5ms mem=48 alloc=3&quot;</code></pre><h3 id="D-case"><a class="docs-heading-anchor" href="#D-case">3D case</a><a id="D-case-1"></a><a class="docs-heading-anchor-permalink" href="#D-case" title="Permalink"></a></h3><p>A 3D example is finding (verifying) the volume of a unit sphere.</p><pre><code class="language-julia hljs">sphere(x::Real,y::Real,z::Real) = abs2(x) + abs2(y) + abs2(z) &lt; 1
+sphere(r::NTuple) = sum(abs2, r) &lt; 1</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">sphere (generic function with 2 methods)</code></pre><p>Storing three 3D arrays of size 2049^3 Float64 would take 192GB, so already we must greatly reduce the sampling to use either <code>broadcast</code> or <code>ndgrid_array</code>. Furthermore, the <code>broadcast</code> requires annoying <code>reshape</code> steps:</p><pre><code class="language-julia hljs">Δc = 1/2^8 # coarse grid
+xc = range(-1, stop=1, step=Δc)
+yc = xc
+zc = xc
+nc = length(zc)
+3 * nc^3 * 8 / 1024^3 # GB prediction</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">3.0176124796271324</code></pre><p>Here is broadcast in 3D (yuch!):</p><pre><code class="language-julia hljs">vol_br(x,y,z,Δ) = sum(sphere.(
+        repeat(x, 1, length(y), length(z)),
+        repeat(reshape(y, (1, :, 1)), length(x), 1, length(z)),
+        repeat(reshape(z, (1, 1, :)), length(x), length(y), 1),
+    )) * Δ^3
+vol_br([0.],[0.],[0.],Δc) # warm-up
+@timeo vol0 = vol_br(xc,yc,zc,Δc) # 2.7 sec, 3.0 GiB, roughly (4/3)π
+
+function vol_ci(xx, yy, zz, Δ)
+    size(xx) == size(yy) == size(zz) || throw(&quot;size&quot;)
+    sum = 0.0
+    @inbounds for c in CartesianIndices(xx)
+        sum += sphere(xx[c], yy[c], zz[c])
+    end
+    return sum * Δ^3
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">vol_ci (generic function with 1 method)</code></pre><p>Here is the lazy version:</p><pre><code class="language-julia hljs">(xlc, ylc, zlc) = ndgrid(xc, yc, zc) # warm-up
+@timeo (xlc, ylc, zlc) = ndgrid(xc, yc, zc); # 0.000022 sec (1.8 KiB)</code></pre><pre><code class="language-julia hljs">vol_ci([0.], [0.], [0.], Δc) # warm-up
+@timeo vol_ci(xlc, ylc, zlc, Δc) # 0.2 sec, 1.4 MiB</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=15484.7ms mem=9668600 alloc=191833&quot;</code></pre><p>Creating the grid of arrays itself is quite slow, even for the coarse grid:</p><pre><code class="language-julia hljs">(xac, yac, zac) = ndgrid_array(xc, yc, zc) # warm-up
+@timeo (xac, yac, zac) = ndgrid_array(xc, yc, zc) # 1.8 sec 3.0GiB</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=16637.8ms mem=3240138720 alloc=21&quot;</code></pre><p>Once created, the array version is no faster than the lazy version:</p><pre><code class="language-julia hljs">@timeo vol_ci(xac, yac, zac, Δc) # 0.2 seconds (1.1 MiB)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=853.0ms mem=1247615 alloc=23350&quot;</code></pre><p>Using <code>zip</code> is more concise (but slower):</p><pre><code class="language-julia hljs">vol_zip(xx, yy, zz, Δ) = sum(sphere, zip(xx,yy,zz)) * Δ^3</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">vol_zip (generic function with 1 method)</code></pre><pre><code class="language-julia hljs">vol_zip([0.], [0.], [0.], Δc) # warm-up
+@timeo vol_zip(xlc, ylc, zlc, Δc) # 1.0 sec, 26 MiB</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=16189.4ms mem=40513280 alloc=795566&quot;</code></pre><p>Using zip for the array version seems to have less overhead so that is a potential for future improvement:</p><pre><code class="language-julia hljs">@assert vol_zip(xac, yac, zac, Δc) ≈ vol0
+@timeo vol_zip(xac, yac, zac, Δc) # 0.19 sec, 16 byte</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=248.3ms mem=16 alloc=1&quot;</code></pre><p>Importantly, with the lazy ndgrid now we can return to the fine scale; it takes a few seconds, but it is feasible because of the low memory.</p><pre><code class="language-julia hljs">z = copy(x)
+@timeo (xlf, ylf, zlf) = ndgrid(x, y, z) # 0.000023 sec</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=0.0ms mem=2384 alloc=19&quot;</code></pre><pre><code class="language-julia hljs">@timeo vol_ci(xlf, ylf, zlf, Δ) # 12.7 sec, 16 bytes</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">&quot;time=989744.5ms mem=16 alloc=1&quot;</code></pre><p>I was hoping that with a lazy grid, now we could explore higher-dimensional spheres.  But with the current <code>zip</code> overhead it was too slow, even with coarse grid.</p><p><code>@timeo (π^2/2, sum(sphere, zip(ndgrid(xc,xc,xc,xc)...)) * Δc^4)</code></p><p>Probably I need to learn more about stuff like <code>pairs(IndexCartesian(), A)</code> <a href="https://github.com/JuliaLang/julia/pull/38150">e.g., this PR</a>. Another day...</p><h3 id="Reproducibility"><a class="docs-heading-anchor" href="#Reproducibility">Reproducibility</a><a id="Reproducibility-1"></a><a class="docs-heading-anchor-permalink" href="#Reproducibility" title="Permalink"></a></h3><p>This page was generated with the following version of Julia:</p><pre><code class="language-julia hljs">io = IOBuffer(); versioninfo(io); split(String(take!(io)), &#39;\n&#39;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">9-element Vector{SubString{String}}:
+ &quot;Julia Version 1.7.3&quot;
+ &quot;Commit 742b9abb4d (2022-05-06 12:58 UTC)&quot;
+ &quot;Platform Info:&quot;
+ &quot;  OS: Linux (x86_64-pc-linux-gnu)&quot;
+ &quot;  CPU: Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz&quot;
+ &quot;  WORD_SIZE: 64&quot;
+ &quot;  LIBM: libopenlibm&quot;
+ &quot;  LLVM: libLLVM-12.0.1 (ORCJIT, icelake-server)&quot;
+ &quot;&quot;</code></pre><p>And with the following package versions</p><pre><code class="language-julia hljs">import Pkg; Pkg.status()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">      Status `~/work/LazyGrids.jl/LazyGrids.jl/docs/Project.toml`
+  [6e4b80f9] BenchmarkTools v1.3.1
+  [e30172f5] Documenter v0.27.19
+  [7031d0ef] LazyGrids v0.4.0 `~/work/LazyGrids.jl/LazyGrids.jl`
+  [98b081ad] Literate v2.13.4
+  [b77e0a4c] InteractiveUtils</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../../methods/">« Methods</a><a class="docs-footer-nextpage" href="../2-copyto/">copyto! test »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.19 on <span class="colophon-date" title="Friday 8 July 2022 04:34">Friday 8 July 2022</span>. Using Julia version 1.7.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
