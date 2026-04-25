@@ -59,13 +59,13 @@ julia> xg, yg = ndgrid(1:3, [:a, :b])
 ([1 1; 2 2; 3 3], [:a :b; :a :b; :a :b])
 
 julia> xg
-3×2 LazyGrids.GridUR{Int64, 1, 2}:
+3×2 LazyGrids.GridUR{Int64, 1, 2, Tuple{Int64, Int64}}:
  1  1
  2  2
  3  3
 
 julia> yg
-3×2 LazyGrids.GridAV{Symbol, 2, 2, Vector{Symbol}}:
+3×2 LazyGrids.GridAV{Symbol, 2, 2, Vector{Symbol}, Tuple{Int64, Int64}}:
  :a  :b
  :a  :b
  :a  :b
