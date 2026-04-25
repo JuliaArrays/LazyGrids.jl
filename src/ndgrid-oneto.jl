@@ -7,7 +7,7 @@ export ndgrid
 
 
 """
-    GridOT{T,d,D} <: AbstractArray{T,D}
+    GridOT{T,d,D} <: AbstractGrid{T,d,D}
 The `d`th component of `D`-dimensional `ndgrid(1:M, 1:N, ...)`
 where `1 ≤ d ≤ D`.
 """
