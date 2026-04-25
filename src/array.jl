@@ -23,7 +23,7 @@ but is more general because the vectors can be any type.
 julia> ndgrid_array(1:3, 1:2)
 ([1 1; 2 2; 3 3], [1 2; 1 2; 1 2])
 
-julia> ndgrid(1:3, [:a,:b])
+julia> ndgrid_array(1:3, [:a,:b])
 ([1 1; 2 2; 3 3], [:a :b; :a :b; :a :b])
 ```
 """
