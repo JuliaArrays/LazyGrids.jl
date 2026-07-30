@@ -7,8 +7,30 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: "julia"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      all-julia-packages:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "julia"
+    directory: "/docs"
+    schedule:
+      interval: "monthly"
+    ignore:
+      - dependency-name: "*"
+
+  - package-ecosystem: "julia"
+    directory: "/test"
+    schedule:
+      interval: "monthly"
+    ignore:
+      - dependency-name: "*"
