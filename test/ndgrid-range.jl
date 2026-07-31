@@ -4,6 +4,21 @@ using LazyGrids: ndgrid, ndgrid_array, GridAR, GridSL, GridUR
 using Test: @test, @testset, @test_throws, @inferred
 
 
+@testset "StepRange BigInt" begin
+    x = BigInt(1):Int8(2):BigInt(9) # StepRange
+    y = BigInt(1):BigInt(7) # UnitRange
+    xx, yy = @inferred ndgrid(x, y)
+    @test eltype(xx) === eltype(x)
+    @test eltype(yy) === eltype(y)
+    @test size(xx) == (length(x), length(y))
+    @test size(yy) == (length(x), length(y))
+    @test xx isa GridAR
+    @test yy isa GridUR
+    @test xx[:,1] == x
+    @test yy[1,:] == y
+end
+
+
 @testset "cvect" begin
     x = 'a':9:'z' # character range
     y = 1:2

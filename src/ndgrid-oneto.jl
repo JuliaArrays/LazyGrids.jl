@@ -11,12 +11,12 @@ export ndgrid
 The `d`th component of `D`-dimensional `ndgrid(1:M, 1:N, ...)`
 where `1 ≤ d ≤ D`.
 """
-struct GridOT{T,d,D} <: AbstractGrid{T,d,D}
-    dims::Dims{D}
+struct GridOT{T, d, D, SZ <: NTuple{D,Integer}} <: AbstractGrid{T,d,D}
+    dims::SZ
 
-    function GridOT(T::Type{<:Integer}, dims::Dims{D}, d::Int) where D
+    function GridOT(T::Type{<:Integer}, dims::SZ, d::Int) where {D, SZ<:NTuple{D,Integer}}
         1 ≤ d ≤ D || throw(ArgumentError("$d for $dims"))
-        new{T,d,D}(dims)
+        new{T,d,D,SZ}(dims)
     end
 end
 
